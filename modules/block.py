@@ -109,8 +109,6 @@ class SemanticEdgeFusion(nn.Module):
 
         if x_modulated.shape[-2:] != x.shape[-2:]:
             x = F.interpolate(x_modulated, size=(H, W), mode='bilinear', align_corners=False)
-            # x = self.down1(x_modulated)
-            # print(x.shape)
 
         x = self.alpha * x + x_save
 
