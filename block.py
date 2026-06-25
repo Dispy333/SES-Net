@@ -42,7 +42,7 @@ class SemanticEdgeFusion(nn.Module):
         self.sc = SobelConv(feat_channel)
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv_1x1s = nn.ModuleList(Conv(feat_channel, ouc, 1) for ouc in oucs)
-        self.afma = CSSG(inc, 32)
+        self.cssg = CSSG(inc, 32)
         self.current_epoch = 0
         self.targets = None
         self.register_buffer('alpha', torch.tensor(0.0))
@@ -52,7 +52,7 @@ class SemanticEdgeFusion(nn.Module):
 
         x_save = x.clone()
 
-        attentions = self.afma(img, x)
+        attentions = self.cssg(img, x)
         
         patch_size = 32
         cssg_loss = None
